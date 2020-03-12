@@ -3,6 +3,7 @@
     <form @submit.prevent="handleSubmit">
       <label>Employee name</label>
       <input
+        ref="first"
         v-model="employee.name"
         type="text"
         :class="{ 'has-error': submitting && invalidName }"
@@ -13,11 +14,15 @@
       <input
         v-model="employee.email"
         type="text"
-        :class=" { 'has-error': submitting && invalidEmail }"
+        :class="{ 'has-error': submitting && invalidEmail }"
         @focus="clearStatus"
       />
-      <p v-if="error && submitting" class="error-message">❗Please fill out all required fields</p>
-      <p v-if="success" class="success-message">✅ Employee successfully added</p>
+      <p v-if="error && submitting" class="error-message">
+        ❗Please fill out all required fields
+      </p>
+      <p v-if="success" class="success-message">
+        ✅ Employee successfully added
+      </p>
       <button>Add Employee</button>
     </form>
   </div>
@@ -47,6 +52,7 @@ export default {
         return;
       }
       this.$emit("add:employee", this.employee);
+      this.$refs.first.focus();
       this.employee = {
         name: "",
         email: ""
